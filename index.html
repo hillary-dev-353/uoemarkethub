@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UOE MarketHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo">UOE MarketHub</div>
+
+        <input type="text" id="searchInput" placeholder="Search products...">
+
+        <select id="categoryFilter">
+            <option value="All">All Categories</option>
+            <option>Phones & Tablets</option>
+            <option>TVs & Audio</option>
+            <option>Appliances</option>
+            <option>Health & Beauty</option>
+            <option>Home & Office</option>
+            <option>Fashion</option>
+            <option>Computing</option>
+            <option>Gaming</option>
+            <option>Supermarket</option>
+            <option>Baby Products</option>
+            <option>Laptops</option>
+            <option>Furniture</option>
+        </select>
+
+        <select id="sortFilter">
+            <option value="newest">Newest</option>
+            <option value="priceLow">Price: Low to High</option>
+            <option value="priceHigh">Price: High to Low</option>
+        </select>
+
+        <button onclick="location.href='profile.html'">Profile</button>
+    </div>
+
+    <div class="main-layout">
+
+        <div class="content">
+            <h2 class="section-title">Latest Listings</h2>
+            <div id="itemsContainer" class="posts-grid"></div>
+        </div>
+
+    </div>
+
+<script type="module" src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post Item</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-body">
+
+<div class="auth-box">
+    <h2>Post Item</h2>
+
+    <input type="text" id="itemName" placeholder="Item Name">
+
+    <input type="number" id="itemPrice" placeholder="Price">
+
+    <textarea id="itemDescription" placeholder="Description"></textarea>
+
+    <select id="itemCategory">
+        <option value="">Select Category</option>
+        <option>Phones & Tablets</option>
+        <option>TVs & Audio</option>
+        <option>Appliances</option>
+        <option>Health & Beauty</option>
+        <option>Home & Office</option>
+        <option>Fashion</option>
+        <option>Computing</option>
+        <option>Gaming</option>
+        <option>Supermarket</option>
+        <option>Baby Products</option>
+        <option>Laptops</option>
+        <option>Furniture</option>
+    </select>
+
+    <input type="text" id="itemWhatsapp" placeholder="WhatsApp Number (e.g. 254712345678)">
+
+    <input type="file" id="itemImage" accept="image/*">
+
+    <button id="postBtn">Post Item</button>
+
+    <button id="backBtn">Back to Profile</button>
+</div>
+
+<script type="module">
+    import { postItem } from "./post.js";
+
+    document.getElementById("postBtn").addEventListener("click", postItem);
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+        window.location.href = "profile.html";
+    });
+</script>
+
+</body>
+</html>
