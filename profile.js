@@ -1,79 +1,59 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
 
-const supabase = createClient("https://wktttpjoidjgvihkocaq.supabase.co", "sb_publishable_NIYt85su5cy9qB5883gsJw_cMjExi-L")
+const supabase = createClient(
+  "https://wktttpjoidjgvihkocaq.supabase.co",
+  "sb_publishable_NIYt85su5cy9qB5883gsJw_cMjExi-L"
+)
 
-// 🔵 DOM
-const profilePic = document.getElementById("profilePic");
-const imageInput = document.getElementById("profileImageInput");
+const profilePic = document.getElementById("profilePic")
+const imageInput = document.getElementById("profileImageInput")
+const myPostsDiv = document.querySelector(".my-posts")
 
-// 🔵 Auth Check
-onAuthStateChanged(auth, async (user) => {
+async function initProfile() {
+  const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    window.location.href = "auth.html";
-    return;
+    window.location.href = "auth.html"
+    return
   }
 
-  document.getElementById("profileName").textContent =
-    user.displayName || user.email;
+  document.getElementById("profileName").textContent = user.email
 
-  const docSnap = await getDoc(doc(db, "users", user.uid));
-  if (docSnap.exists()) {
-    profilePic.src = docSnap.data().photoURL || profilePic.src;
-  }
-});
+  loadMyPosts(user.id)
+}
 
-// ===============================
-// 🔵 BUTTON FUNCTIONS
-// ===============================
+async function loadMyPosts(userId) {
+  const { data } = await supabase
+    .from("items")
+    .select("*")
+    .eq("ownerid", userId)
 
-window.goHome = function () {
-  window.location.href = "index.html";
-};
+  myPostsDiv.innerHTML = ""
 
-window.goToPost = function () {
-  window.location.href = "post.html";
-};
+  data.forEach(item => {
+    const div = document.createElement("div")
+    div.className = "card"
+    div.innerHTML = `
+      <img src="${item.image}">
+      <div class="card-body">
+        <h4>${item.name}</h4>
+        <p class="price">Ksh ${item.price}</p>
+      </div>
+    `
+    myPostsDiv.appendChild(div)
+  })
+}
 
-window.logoutUser = async function () {
-  try {
-    await signOut(auth);
-    window.location.href = "auth.html";
-  } catch (error) {
-    console.error(error);
-    alert("Error logging out.");
-  }
-};
+window.goHome = () => window.location.href = "index.html"
+window.goToPost = () => window.location.href = "post.html"
 
-window.changePhoto = function () {
-  imageInput.click();
-};
+window.logoutUser = async () => {
+  await supabase.auth.signOut()
+  window.location.href = "auth.html"
+}
 
-// ===============================
-// 🔵 UPLOAD PROFILE PHOTO
-// ===============================
+window.changePhoto = () => {
+  imageInput.click()
+}
 
-imageInput.addEventListener("change", async () => {
-
-  const file = imageInput.files[0];
-  const user = auth.currentUser;
-
-  if (!file || !user) return;
-
-  try {
-    const imageRef = ref(storage, `profiles/${user.uid}`);
-    await uploadBytes(imageRef, file);
-    const url = await getDownloadURL(imageRef);
-
-    await setDoc(doc(db, "users", user.uid), {
-      photoURL: url
-    }, { merge: true });
-
-    profilePic.src = url;
-    alert("Profile updated!");
-
-  } catch (error) {
-    console.error(error);
-    alert("Error uploading image.");
-  }
-});
+initProfile()
