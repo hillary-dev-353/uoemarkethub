@@ -5,35 +5,36 @@ const supabase = createClient(
   "sb_publishable_NIYt85su5cy9qB5883gsJw_cMjExi-L"
 )
 
-window.signUp = async function () {
+const signupBtn = document.getElementById("signupBtn")
+const loginBtn = document.getElementById("loginBtn")
+const guestBtn = document.getElementById("guestBtn")
+const message = document.getElementById("authMessage")
+
+// SIGN UP
+signupBtn.addEventListener("click", async () => {
+
   const email = document.getElementById("email").value
   const password = document.getElementById("password").value
 
-  const { data, error } = await supabase.auth.signUp({
+  const { error } = await supabase.auth.signUp({
     email,
-    password
+    password,
+    options: {
+      emailRedirectTo: "https://uoemarkethub.vercel.app/index.html"
+    }
   })
 
   if (error) {
-    alert(error.message)
-    return
+    message.innerText = error.message
+  } else {
+    message.innerText = "Check your email to confirm signup."
   }
+})
 
-  // 🔥 Immediately sign in after signup
-  const { error: loginError } = await supabase.auth.signInWithPassword({
-    email,
-    password
-  })
 
-  if (loginError) {
-    alert(loginError.message)
-    return
-  }
+// LOGIN
+loginBtn.addEventListener("click", async () => {
 
-  window.location.href = "index.html"
-}
-
-window.login = async function () {
   const email = document.getElementById("loginEmail").value
   const password = document.getElementById("loginPassword").value
 
@@ -43,8 +44,14 @@ window.login = async function () {
   })
 
   if (error) {
-    alert(error.message)
+    message.innerText = "Invalid login credentials"
   } else {
     window.location.href = "index.html"
   }
-}
+})
+
+
+// CONTINUE AS GUEST
+guestBtn.addEventListener("click", () => {
+  window.location.href = "index.html"
+})
