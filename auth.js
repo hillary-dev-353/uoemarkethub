@@ -5,53 +5,68 @@ const supabase = createClient(
   "sb_publishable_NIYt85su5cy9qB5883gsJw_cMjExi-L"
 )
 
-const signupBtn = document.getElementById("signupBtn")
-const loginBtn = document.getElementById("loginBtn")
-const guestBtn = document.getElementById("guestBtn")
-const message = document.getElementById("authMessage")
+// Get elements AFTER page loads
+document.addEventListener("DOMContentLoaded", () => {
 
-// SIGN UP
-signupBtn.addEventListener("click", async () => {
+  const signupBtn = document.getElementById("signupBtn")
+  const loginBtn = document.getElementById("loginBtn")
+  const guestBtn = document.getElementById("guestBtn")
+  const message = document.getElementById("authMessage")
 
-  const email = document.getElementById("email").value
-  const password = document.getElementById("password").value
+  // SIGN UP
+  signupBtn.addEventListener("click", async () => {
 
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: "https://uoemarkethub.vercel.app/index.html"
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
+
+    if (!email || !password) {
+      message.innerText = "Enter email and password"
+      return
+    }
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: "https://uoemarkethub.vercel.app/index.html"
+      }
+    })
+
+    if (error) {
+      message.innerText = error.message
+    } else {
+      message.innerText = "Check your email to verify your account."
     }
   })
 
-  if (error) {
-    message.innerText = error.message
-  } else {
-    message.innerText = "Check your email to confirm signup."
-  }
-})
 
+  // LOGIN
+  loginBtn.addEventListener("click", async () => {
 
-// LOGIN
-loginBtn.addEventListener("click", async () => {
+    const email = document.getElementById("loginEmail").value
+    const password = document.getElementById("loginPassword").value
 
-  const email = document.getElementById("loginEmail").value
-  const password = document.getElementById("loginPassword").value
+    if (!email || !password) {
+      message.innerText = "Enter login details"
+      return
+    }
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if (error) {
+      message.innerText = "Invalid credentials"
+    } else {
+      window.location.href = "index.html"
+    }
   })
 
-  if (error) {
-    message.innerText = "Invalid login credentials"
-  } else {
+
+  // CONTINUE AS GUEST
+  guestBtn.addEventListener("click", () => {
     window.location.href = "index.html"
-  }
-})
+  })
 
-
-// CONTINUE AS GUEST
-guestBtn.addEventListener("click", () => {
-  window.location.href = "index.html"
 })

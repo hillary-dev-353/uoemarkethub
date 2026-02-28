@@ -1,42 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login / Signup</title>
-    <link rel="stylesheet" href="style.css">
+  <title>Auth - UOE Market Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="auth-body">
 
-<div class="auth-container">
-
-    <h2>Sign Up</h2>
-
-    <input type="text" id="fullName" placeholder="Full Name">
+  <div class="auth-container">
+    <h2>Create Account</h2>
 
     <input type="email" id="email" placeholder="Email">
-
     <input type="password" id="password" placeholder="Password">
-
-    <button onclick="signUp()">Sign Up</button>
+    <button type="button" id="signupBtn">Sign Up</button>
 
     <hr>
 
-    <h3>Already have an account?</h3>
+    <h2>Login</h2>
 
     <input type="email" id="loginEmail" placeholder="Email">
-
     <input type="password" id="loginPassword" placeholder="Password">
-
-    <button onclick="login()">Login</button>
+    <button type="button" id="loginBtn">Login</button>
 
     <hr>
 
-    <button onclick="window.location.href='index.html'" style="background:black;">
-        Continue as Guest
-    </button>
+    <button type="button" id="guestBtn">Continue as Guest</button>
 
-</div>
+    <p id="authMessage"></p>
+  </div>
 
-<script type="module" src="auth.js"></script>
+  <script type="module" src="auth.js"></script>
 
 </body>
 </html>
