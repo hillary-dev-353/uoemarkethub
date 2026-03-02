@@ -5,18 +5,27 @@ const supabase = createClient(
   "sb_publishable_NIYt85su5cy9qB5883gsJw_cMjExi-L"
 )
 
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("load", () => {
+
+  console.log("Auth JS Loaded")
 
   const signupBtn = document.getElementById("signupBtn")
   const loginBtn = document.getElementById("loginBtn")
   const guestBtn = document.getElementById("guestBtn")
   const message = document.getElementById("authMessage")
 
-  // SIGN UP
-  signupBtn.onclick = async () => {
+  if (!signupBtn || !loginBtn || !guestBtn) {
+    console.error("Buttons not found in HTML")
+    return
+  }
 
-    const email = document.getElementById("email").value.trim()
-    const password = document.getElementById("password").value.trim()
+  // SIGN UP
+  signupBtn.addEventListener("click", async () => {
+
+    console.log("Signup clicked")
+
+    const email = document.getElementById("email")?.value.trim()
+    const password = document.getElementById("password")?.value.trim()
 
     if (!email || !password) {
       message.innerText = "Enter email and password"
@@ -33,16 +42,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (error) {
       message.innerText = error.message
+      console.error(error)
     } else {
-      message.innerText = "Verification email sent. Check your inbox."
+      message.innerText = "Verification email sent. Check inbox."
+      console.log("Signup request sent")
     }
-  }
+  })
+
 
   // LOGIN
-  loginBtn.onclick = async () => {
+  loginBtn.addEventListener("click", async () => {
 
-    const email = document.getElementById("loginEmail").value.trim()
-    const password = document.getElementById("loginPassword").value.trim()
+    console.log("Login clicked")
+
+    const email = document.getElementById("loginEmail")?.value.trim()
+    const password = document.getElementById("loginPassword")?.value.trim()
 
     if (!email || !password) {
       message.innerText = "Enter login details"
@@ -56,14 +70,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (error) {
       message.innerText = "Invalid login credentials"
+      console.error(error)
     } else {
       window.location.href = "index.html"
     }
-  }
+  })
 
-  // GUEST
-  guestBtn.onclick = () => {
+
+  // CONTINUE AS GUEST
+  guestBtn.addEventListener("click", () => {
+    console.log("Guest clicked")
     window.location.href = "index.html"
-  }
+  })
 
 })
