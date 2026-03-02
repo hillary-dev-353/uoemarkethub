@@ -411,3 +411,49 @@ button:hover {
   padding: 30px;
   border-radius: 10px;
 }
+/* ============================= */
+/* MOBILE RESPONSIVE UPGRADE */
+/* ============================= */
+
+.auth-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.auth-container {
+  width: 400px;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.auth-container input,
+.auth-container button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+
+  body {
+    font-size: 16px;
+  }
+
+  .auth-container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .card {
+    width: 100% !important;
+  }
+
+}

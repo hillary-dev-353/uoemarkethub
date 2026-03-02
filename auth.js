@@ -1,11 +1,10 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 const supabase = createClient(
   "https://wktttpjoidjgvihkocaq.supabase.co",
   "sb_publishable_NIYt85su5cy9qB5883gsJw_cMjExi-L"
 )
 
-// Get elements AFTER page loads
 document.addEventListener("DOMContentLoaded", () => {
 
   const signupBtn = document.getElementById("signupBtn")
@@ -14,10 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const message = document.getElementById("authMessage")
 
   // SIGN UP
-  signupBtn.addEventListener("click", async () => {
+  signupBtn.onclick = async () => {
 
-    const email = document.getElementById("email").value
-    const password = document.getElementById("password").value
+    const email = document.getElementById("email").value.trim()
+    const password = document.getElementById("password").value.trim()
 
     if (!email || !password) {
       message.innerText = "Enter email and password"
@@ -35,16 +34,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (error) {
       message.innerText = error.message
     } else {
-      message.innerText = "Check your email to verify your account."
+      message.innerText = "Verification email sent. Check your inbox."
     }
-  })
-
+  }
 
   // LOGIN
-  loginBtn.addEventListener("click", async () => {
+  loginBtn.onclick = async () => {
 
-    const email = document.getElementById("loginEmail").value
-    const password = document.getElementById("loginPassword").value
+    const email = document.getElementById("loginEmail").value.trim()
+    const password = document.getElementById("loginPassword").value.trim()
 
     if (!email || !password) {
       message.innerText = "Enter login details"
@@ -57,16 +55,15 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     if (error) {
-      message.innerText = "Invalid credentials"
+      message.innerText = "Invalid login credentials"
     } else {
       window.location.href = "index.html"
     }
-  })
+  }
 
-
-  // CONTINUE AS GUEST
-  guestBtn.addEventListener("click", () => {
+  // GUEST
+  guestBtn.onclick = () => {
     window.location.href = "index.html"
-  })
+  }
 
 })
